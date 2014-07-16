@@ -1,0 +1,54 @@
+@import fonts
+@import variables
+@import ../3p/foundation
+
+// Global styles
+
+html, body
+  height: 100%
+  margin: 0
+  padding: 0
+
+
+@media #{$small-up}
+  body
+    font-size: 115%
+
+@media #{$medium-up}
+  body
+    font-size: 150%
+
+// Stuff for the header (canvas etc)
+
+header
+  min-height: 100%
+  background-color: $header-starting-bg-color
+
+  canvas
+    position: absolute
+
+  div
+    position: relative
+    z-index: 1
+    padding-top: 20%
+    text-align: center
+    color: white
+
+    h1
+      font-family: 'VeneerTwo'
+      font-size: 5em
+      margin: 0.1em auto
+      padding: 0.1em auto
+      font-weight: normal
+
+    p
+      font-size: 1.5em
+
+    a
+      display: block
+      color: #b32d00
+      margin-top: 10%
+
+@media #{$medium-up}
+  header div
+    padding-top: 15%
