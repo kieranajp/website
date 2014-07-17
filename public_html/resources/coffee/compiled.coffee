@@ -7,7 +7,8 @@ size = null
 to = null
 x = 0
 y = 0
-pos = true
+posx = true
+posy = true
 
 
 setup = ->
@@ -27,8 +28,8 @@ normalize = (c) ->
 
 
 generateColors = (x, y) ->
-  xc = ~~(256 * x / canvas.width) + 120
-  yc = ~~(256 * x / canvas.width) + 120
+  xc = ~~(256 * x / canvas.width) + 100
+  yc = ~~(256 * x / canvas.width) + 100
 
   normalize xc
   normalize yc
@@ -36,7 +37,10 @@ generateColors = (x, y) ->
   # Work out colors for the gradient
   colors =
     stop0 : "rgb(#{-xc}, #{xc}, #{yc})"
-    stop1 : "rgb(#{-yc}, #{yc}, #{xc - 80})"
+    stop1 : "rgb(#{-yc}, #{yc}, #{xc - 220})"
+
+  # This is great for testing
+  #colors.stop0 = "#fff"
 
   xc += 100
   yc += 100
@@ -45,7 +49,7 @@ generateColors = (x, y) ->
   normalize yc
 
   # Work out a color to keep the CTA's contrast sufficient
-  colors.cta = "rgb(#{xc}, #{yc/2}, #{xc/2})"
+  colors.cta = "rgb(#{xc}, #{yc / 1.5}, #{xc / 2})"
   colors
 
 
@@ -58,7 +62,7 @@ createGradient = (x, y, colors) ->
   grad = ctx.createRadialGradient x, y, 0, rx, ry, size
 
   # Color it in
-  grad.addColorStop 0, colors.stop0
+  grad.addColorStop 0.2, colors.stop0
   grad.addColorStop 1, colors.stop1
 
   # Add the gradient to the canvas
@@ -67,16 +71,21 @@ createGradient = (x, y, colors) ->
 
 
 run = ->
-  pos = false if x >= canvas.width or y >= canvas.height
-  pos = true if x <= 0 or y <= 0
-  i = ~~(Math.random() * 3)
-  j = ~~(Math.random() * 3)
+  posx = false if x >= canvas.width
+  posy = false if y >= canvas.height
+  posx = true if x <= 0
+  posy = true if y <= 0
+  i = ~~(Math.random() * (size * 2.75) / canvas.height)
+  j = ~~(Math.random() * (size * 2.75) / canvas.width)
 
-  if pos
+  if posx
     x += i
-    y += j
   else
     x -= i
+
+  if posy
+    y += j
+  else
     y -= j
 
   colors = generateColors x, y
